@@ -1,10 +1,13 @@
 package wedding.perfectlove23.app.invitation;
 
 import java.io.IOException;
+import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -36,5 +39,15 @@ public class InvitationController {
 		FileUploadUtil.saveFile(uploadDir, String.valueOf(savedInvitation.getId()) + ".jpg", multipartFile);
 
 		return savedInvitation;
+	}
+	
+	@RequestMapping("{mobileNumber}/invitation")
+	public Optional<Invitation> getInvitationByMobileNumber(@PathVariable String mobileNumber) {
+		return invitationService.getInvitationByMobileNumber(mobileNumber);
+	}
+	
+	@RequestMapping("/invitations")
+	public List<Invitation> getAllInvitation() {
+		return invitationService.getAllInvitation();
 	}
 }

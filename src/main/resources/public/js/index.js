@@ -434,7 +434,7 @@ function submitImage() {
   formData.append("image", targetImage.files[0]);
 
   let submitImageXhr = new XMLHttpRequest();
-  submitImageXhr.open("POST", "http://127.0.0.1/image/invitation", true);
+  submitImageXhr.open("POST", "/image/invitation", true);
   submitImageXhr.send(formData);
 
   submitImageXhr.onreadystatechange = function () {
@@ -483,7 +483,7 @@ function submitInvitation(invitation) {
     memories: testimony.value,
   }
   let invitationXhr = new XMLHttpRequest();
-  invitationXhr.open("PUT", "http://127.0.0.1/invitation", true);
+  invitationXhr.open("PUT", "/invitation", true);
   invitationXhr.setRequestHeader("Content-type", "application/json");
   invitationXhr.send(JSON.stringify(payload));
 
