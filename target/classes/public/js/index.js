@@ -351,7 +351,7 @@ function displaySixth(direction, delay = 1000) {
     // fadeInFadeOut(first, sixth);
     fadeInFadeOut(fifth, sixth);
     contentSixth.style.display = "block";
-    document.getElementById("guest-name").innerText = title.options[title.value].innerText + " " +  firstName.value + " " + lastName.value
+    document.getElementById("guest-name").innerText = title.options[title.value].innerText + " " + firstName.value + " " + lastName.value
   } else {
     delay = 300;
   }
@@ -430,22 +430,12 @@ function validateArrival(date) {
 
 
 function submitImage() {
-  let formData = new FormData();
-  formData.append("image", targetImage.files[0]);
-
-  let submitImageXhr = new XMLHttpRequest();
-  submitImageXhr.open("POST", "http://127.0.0.1/image/invitation", true);
-  submitImageXhr.send(formData);
-
-  submitImageXhr.onreadystatechange = function () {
-    if (this.readyState == 4 && this.status == 200) {
-      let response = JSON.parse(this.response);
-      submitInvitation(response)
-    }
-  }
+  uploadImage(targetImage.files[0]);
 }
 
-function submitInvitation(invitation) {
+
+
+function submitInvitation(image) {
   let appearance;
   let assistance2;
   attendModes.forEach(function (item, index) {
@@ -468,9 +458,7 @@ function submitInvitation(invitation) {
       }
     }
   })
-  console.log(title.options[title.value])
   let payload = {
-    id: invitation.id,
     title: title.options[title.value].innerText,
     firstName: firstName.value,
     lastName: lastName.value,
@@ -481,6 +469,7 @@ function submitInvitation(invitation) {
     arrivalDate: date.value,
     assistance: assistance2,
     memories: testimony.value,
+    image: image
   }
   let invitationXhr = new XMLHttpRequest();
   invitationXhr.open("PUT", "http://127.0.0.1/invitation", true);
@@ -529,14 +518,14 @@ document.body.addEventListener("click", function (e) {
   else if (targetId == "to-sixth") {
     console.log(image.src)
     if (image.src == `${location.origin}/images/pngfind.com-placeholder-png-6104451.png`) {
-        image.parentElement.parentElement.nextElementSibling.style.display = "block"
-    }   
+      image.parentElement.parentElement.nextElementSibling.style.display = "block"
+    }
     else {
       submitImage();
       // displayFifth("reverse");
     }
   }
- 
+
   else if (targetId == "enable-audio") {
     if (volume == false) {
       document.getElementById("first").style.display = "block"
@@ -589,4 +578,54 @@ ScrollReveal().reveal(".top-spc", { distance: "10px", origin: "top" });
 function bindStates(state) {
   return `<option value="${state.stateId}">${state.stateName}</option>`;
 }
+
+const firebaseConfig = {
+  apiKey: "AIzaSyBJZSHLDVM8_xG_MpB95AWVrKFOjhjEXgo",
+  authDomain: "perfectlove23-29fae.firebaseapp.com",
+  projectId: "perfectlove23-29fae",
+  storageBucket: "perfectlove23-29fae.appspot.com",
+  messagingSenderId: "631163724583",
+  appId: "1:631163724583:web:9302ef7a2f66198a677f02",
+  measurementId: "G-CF7CHRGVPN"
+};
+
+let app = firebase.initializeApp(firebaseConfig);
+
+async function uploadImage(image) {
+  let storageRef = firebase.storage().ref();
+
+  let imageRef = storageRef.child(image.name);
+
+  let uploadTask = imageRef.put(image);
+
+  uploadTask.on('state_changed', 
+  (snapshot) => {
+    // Observe state change events such as progress, pause, and resume
+    // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
+    var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+    console.log('Upload is ' + progress + '% done');
+    switch (snapshot.state) {
+      case firebase.storage.TaskState.PAUSED: // or 'paused'
+        console.log('Upload is paused');
+        break;
+      case firebase.storage.TaskState.RUNNING: // or 'running'
+        console.log('Upload is running');
+        break;
+    }
+  }, 
+  (error) => {
+    // Handle unsuccessful uploads
+  }, 
+  () => {
+    // Handle successful uploads on complete
+    // For instance, get the download URL: https://firebasestorage.googleapis.com/...
+    uploadTask.snapshot.ref.getDownloadURL().then((downloadURL) => {
+      console.log('File available at', downloadURL);
+      submitInvitation(downloadURL);
+    });
+  }
+);
+}
+
+
 

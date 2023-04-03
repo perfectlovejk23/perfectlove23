@@ -20,6 +20,7 @@ public class Invitation {
 	private String arrivalDate;
 	private String assistance;
 	private String memories;
+	private String photo;
 
 	public String getMobileNumber() {
 		return mobileNumber;
@@ -107,6 +108,18 @@ public class Invitation {
 
 	public void setTitle(String title) {
 		this.title = title;
+	}
+
+	public String getPhoto() {
+		return photo;
+	}
+
+	public void setPhoto(String photo) {
+		this.photo = photo;
+	}
+
+	public void setState(String state) {
+		this.state = state;
 	}	
 	
 }
