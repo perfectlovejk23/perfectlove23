@@ -578,8 +578,8 @@
                             <option value="3">Barrister</option>
                             <option value="4">Mr</option>
                             <option value="5">Mrs</option>
-                            <option value="4">Bro</option>
-                            <option value="5">Sis</option>
+                            <option value="6">Bro</option>
+                            <option value="7">Sis</option>
                         </select>
                         <label class="text-xs text-red-500" style="display: none;">Please select a title</label>
                     </div>
@@ -805,8 +805,12 @@
                 </div>
 
 
-                <div class="text-center">
-                    <button id="to-sixth" class="text-white p-2 rounded mt-10 w-32 primary">Continue</button>
+                <div class="text-center mt-8">
+                    <div id="progress" style="display: none;">
+                        <span class="fa fa-spinner fa-spin green-text" style="font-size: 20px;"></span>
+                        <div class="green-text mt-1 font-bold">Uploading <span id="progress-percent">0</span>%</div>
+                    </div>
+                    <button id="to-sixth" class="text-white p-2 rounded w-32 primary">Continue</button>
                 </div>
             </div>
 
@@ -851,9 +855,12 @@
             </div>
             <p class="green-text text-2xl text-center">Thanks for honoring our wedding invitation</p>
             <p class="green-text text-lg text-center">Kindly download your custom IV</p>
-            <div class="text-center">
+            <div class="text-center mt-4">
 
-                <button id="download-iv" class="text-white p-2 rounded w-32 primary mt-4 font-bold">Download
+                <div id="iv-progress" style="display: none;">
+                    <span class="fa fa-spinner fa-spin green-text" style="font-size: 20px;"></span>
+                </div>
+                <button id="download-iv" class="text-white p-2 rounded w-32 primary font-bold">Download
                     IV</button>
             </div>
 

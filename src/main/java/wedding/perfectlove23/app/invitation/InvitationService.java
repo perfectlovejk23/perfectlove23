@@ -19,6 +19,10 @@ public class InvitationService {
 		return invitationRepository.findByMobileNumber(mobileNumber);
 	}
 	
+	public List<Invitation> getInvitationGreatherThan(int id) {
+		return invitationRepository.findFirst10ByIdGreaterThan(id);
+	}
+	
 	public List<Invitation> getAllInvitation() {
 		return (List<Invitation>) invitationRepository.findAll();
 	}

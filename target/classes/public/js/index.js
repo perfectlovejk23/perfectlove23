@@ -438,26 +438,29 @@ function submitImage() {
 function submitInvitation(image) {
   let appearance;
   let assistance2;
-  attendModes.forEach(function (item, index) {
-    if (item.checked) {
-      if (index = 0) {
-        appearance = "Physical presence"
-      }
-      else {
-        appearance = "Online presence"
-      }
-    }
-  })
-  assistance.forEach(function (item, index) {
-    if (item.checked) {
-      if (index = 0) {
-        assistance2 = "Yes"
-      }
-      else {
-        assistance2 = "No"
-      }
-    }
-  })
+
+  let radio1 = document.getElementById("attend-mode-physical");
+  let radio2 = document.getElementById("attend-mode-online");
+
+  let radio3 = document.getElementById("yes-assistance");
+  let radio4 = document.getElementById("no-assistance");
+
+  if (radio1.checked) {
+    appearance = "Physical presence"
+  }
+  if (radio2.checked) {
+    appearance = "Online presence"
+  }
+
+  if (radio3.checked) {
+    assistance2 = "Yes"
+  }
+  if (radio4.checked) {
+    assistance2 = "No"
+  }
+
+
+
   let payload = {
     title: title.options[title.value].innerText,
     firstName: firstName.value,
@@ -469,10 +472,11 @@ function submitInvitation(image) {
     arrivalDate: date.value,
     assistance: assistance2,
     memories: testimony.value,
-    image: image
+    photo: image
   }
+  console.log(payload)
   let invitationXhr = new XMLHttpRequest();
-  invitationXhr.open("PUT", "http://127.0.0.1/invitation", true);
+  invitationXhr.open("POST", "/invitation", true);
   invitationXhr.setRequestHeader("Content-type", "application/json");
   invitationXhr.send(JSON.stringify(payload));
 
@@ -522,7 +526,6 @@ document.body.addEventListener("click", function (e) {
     }
     else {
       submitImage();
-      // displayFifth("reverse");
     }
   }
 
@@ -541,6 +544,11 @@ document.body.addEventListener("click", function (e) {
 });
 
 function downloadIv() {
+  document.getElementById("download-iv").style.display = "none";
+  document.getElementById("iv-progress").style.display = "block";
+  setTimeout(function () {
+    document.getElementById("iv-progress").style.display = "none";
+  }, 3000)
   html2canvas(document.getElementById("iv")).then(function (canvas) {
     var anchorTag = document.createElement("a");
     document.body.appendChild(anchorTag);
@@ -592,39 +600,42 @@ const firebaseConfig = {
 let app = firebase.initializeApp(firebaseConfig);
 
 async function uploadImage(image) {
+  document.getElementById("to-sixth").style.display = "none"
+  document.getElementById("progress").style.display = "block"
   let storageRef = firebase.storage().ref();
 
   let imageRef = storageRef.child(image.name);
 
   let uploadTask = imageRef.put(image);
 
-  uploadTask.on('state_changed', 
-  (snapshot) => {
-    // Observe state change events such as progress, pause, and resume
-    // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
-    var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-    console.log('Upload is ' + progress + '% done');
-    switch (snapshot.state) {
-      case firebase.storage.TaskState.PAUSED: // or 'paused'
-        console.log('Upload is paused');
-        break;
-      case firebase.storage.TaskState.RUNNING: // or 'running'
-        console.log('Upload is running');
-        break;
+  uploadTask.on('state_changed',
+    (snapshot) => {
+      // Observe state change events such as progress, pause, and resume
+      // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
+      var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+      document.getElementById("progress-percent").textContent = progress.toFixed(0);
+      console.log('Upload is ' + progress + '% done');
+      switch (snapshot.state) {
+        case firebase.storage.TaskState.PAUSED: // or 'paused'
+          console.log('Upload is paused');
+          break;
+        case firebase.storage.TaskState.RUNNING: // or 'running'
+          console.log('Upload is running');
+          break;
+      }
+    },
+    (error) => {
+      alert("Upload was unsuccessful. Please try again")
+    },
+    () => {
+      // Handle successful uploads on complete
+      // For instance, get the download URL: https://firebasestorage.googleapis.com/...
+      uploadTask.snapshot.ref.getDownloadURL().then((downloadURL) => {
+        console.log('File available at', downloadURL);
+        submitInvitation(downloadURL);
+      });
     }
-  }, 
-  (error) => {
-    // Handle unsuccessful uploads
-  }, 
-  () => {
-    // Handle successful uploads on complete
-    // For instance, get the download URL: https://firebasestorage.googleapis.com/...
-    uploadTask.snapshot.ref.getDownloadURL().then((downloadURL) => {
-      console.log('File available at', downloadURL);
-      submitInvitation(downloadURL);
-    });
-  }
-);
+  );
 }
 
 
