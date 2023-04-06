@@ -42,6 +42,11 @@ public class InvitationController {
 		}
 		return invitationService.getAllInvitation();
 	}
+	
+	@RequestMapping("/invitation/{id}")
+	public Optional<Invitation> getInvitation(@PathVariable int id) {
+		return invitationService.getInvitation(id);
+	}
 
 	@RequestMapping("{mobileNumber}/invitation")
 	public Optional<Invitation> getInvitationByMobileNumber(@PathVariable String mobileNumber) {

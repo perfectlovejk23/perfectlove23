@@ -12,7 +12,7 @@ html.sr .load-hidden {
   background-repeat: no-repeat;
   background-size: 120vw 95vh;
   background-position: -50px 0px;
-  transform: scale(1);
+  transform: scale(0.9);
 }
 
 .hero-bg-2 {
@@ -180,12 +180,7 @@ body {
   outline: 1px solid rgb(19, 82, 55)
 }
 
-.swiper {
-  width: 100vw;
-  height: 95vh;
-  position: absolute;
-  top: 0px;
-}
+
 
 
 
@@ -199,18 +194,14 @@ body {
     background-blend-mode: overlay;
   }
 
-  .hero-bg-2, .hero-bg-3, .hero-bg-4, .hero-bg-5, .hero-bg-6, .hero-bg-7, .hero-bg-8, .hero-bg-9 {
-    background-size: 30vw 100vh;
-    background-position: -10px 0px;
-    background-color: rgb(80, 79, 79);
-    background-blend-mode: overlay;
-  }
 
   body {
     background-image: url(/images/A\ \(6\).jpg);
     background-repeat: no-repeat;
     background-size: 30vw 100vh;
     background-position: 35vw 0px;
+    min-width: 100%;
+    max-width: 100%;
   }
 
   #second, #third, #fourth, #fifth {

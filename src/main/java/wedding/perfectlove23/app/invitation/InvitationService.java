@@ -15,12 +15,16 @@ public class InvitationService {
 		return invitationRepository.save(invitation);
 	}
 	
+	public Optional<Invitation> getInvitation(int id) {
+		return invitationRepository.findById(id);
+	}
+	
 	public Optional<Invitation> getInvitationByMobileNumber(String mobileNumber) {
 		return invitationRepository.findByMobileNumber(mobileNumber);
 	}
 	
 	public List<Invitation> getInvitationGreatherThan(int id) {
-		return invitationRepository.findFirst10ByIdGreaterThan(id);
+		return invitationRepository.findFirst100ByIdGreaterThanEqual(id);
 	}
 	
 	public List<Invitation> getAllInvitation() {

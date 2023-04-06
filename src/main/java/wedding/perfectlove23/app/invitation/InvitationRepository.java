@@ -9,5 +9,5 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface InvitationRepository extends CrudRepository<Invitation, Integer> {
 	public Optional<Invitation> findByMobileNumber(String mobileNumber);
-	public List<Invitation> findFirst10ByIdGreaterThan(int id);
+	public List<Invitation> findFirst100ByIdGreaterThanEqual(int id);
 }

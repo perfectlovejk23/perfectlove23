@@ -1,24 +1,3 @@
-allBg = document.querySelectorAll(".swiper-bg");
-const swiper = new Swiper('.swiper', {
-  direction: 'vertical',
-  loop: true,
-  speed: 500,
-});
-
-swiper.on('slideChange', function (e) {
-  anime.timeline({
-    easing: "easeOutExpo",
-    duration: 400,
-  }).add({
-    targets: ".swiper-bg",
-    easing: "easeOutExpo",
-    scale: [1, 0.95],
-  }).add({
-    targets: ".swiper-bg",
-    easing: "easeOutExpo",
-    scale: [0.95, 1],
-  })
-});
 let targetImage = 0;
 let canSaveDate = false;
 
@@ -52,7 +31,6 @@ let date = document.querySelector("#date");
 let assistance = document.getElementsByName("assistance");
 let image = document.getElementById("profile");
 let testimony = document.querySelector("#testimony");
-
 
 var textWrapper = document.querySelector(".ml11 .letters");
 textWrapper.innerHTML = textWrapper.textContent.replace(
@@ -106,31 +84,40 @@ function displayFirst(direction, delay = 100, delay2 = 104, delay3 = 54) {
         }
       },
     })
-    .add({
-      targets: ".logo",
-      translateX: [10, 0],
-      opacity: [0, 1],
-      duration: 800,
-      easing: "easeOutSine",
-    }, '-=400')
-    .add({
-      targets: ".ml11 .letter",
-      opacity: [0, 1],
-      delay: (el, i) => delay2 * (i + 1),
-    }, '-=400')
-    .add({
-      targets: ".ml12 .letter2",
-      opacity: [0, 1],
-      delay: (el, i) => delay3 * (i + 1),
-      complete: function (anim) {
-        showImage(direction);
+    .add(
+      {
+        targets: ".logo",
+        translateX: [10, 0],
+        opacity: [0, 1],
+        duration: 800,
+        easing: "easeOutSine",
       },
-    }, "-=175");
+      "-=400"
+    )
+    .add(
+      {
+        targets: ".ml11 .letter",
+        opacity: [0, 1],
+        delay: (el, i) => delay2 * (i + 1),
+      },
+      "-=400"
+    )
+    .add(
+      {
+        targets: ".ml12 .letter2",
+        opacity: [0, 1],
+        delay: (el, i) => delay3 * (i + 1),
+        complete: function (anim) {
+          showImage(direction);
+        },
+      },
+      "-=175"
+    );
 }
 
 function showImage(direction, duration = 1100) {
   if (direction == "reverse") {
-    duration = 800
+    duration = 800;
   }
   anime({
     duration: 1100,
@@ -145,19 +132,16 @@ function showImage(direction, duration = 1100) {
           calculatedRgba = 0.3;
         }
         heroBgOverlay.style.backgroundColor = `rgba(0, 0, 0, ${calculatedRgba})`;
-      }
-      else if (direction == "reverse") {
+      } else if (direction == "reverse") {
         calculatedRgba = ((0.795 * anim.progress) / 100).toFixed(3);
         heroBgOverlay.style.backgroundColor = `rgba(0, 0, 0, ${calculatedRgba})`;
       }
-    }
+    },
   });
   anime({
     duration: 1000,
     easing: "easeOutExpo",
-    begin: function (anim) {
-      swiper.autoplay.start({ delay: 10, })
-    },
+
     update: function (anim) {
       let calculatedBackdrop;
       if (direction == "normal") {
@@ -176,14 +160,14 @@ function showImage(direction, duration = 1100) {
     targets: ".hero-bg",
     duration: 2000,
     easing: "easeOutExpo",
-    scale: [1, 1.05]
-  })
+    scale: [0.9, 1],
+  });
   anime({
     targets: ".hero-bg-overlay",
     duration: 2000,
     easing: "easeOutExpo",
-    scale: [1, 1.05]
-  })
+    scale: [0.9, 1],
+  });
 }
 
 function showButton(direction) {
@@ -197,7 +181,6 @@ function showButton(direction) {
     direction: direction,
     complete: function (anim) {
       canSaveDate = true;
-
     },
   });
 }
@@ -351,7 +334,12 @@ function displaySixth(direction, delay = 1000) {
     // fadeInFadeOut(first, sixth);
     fadeInFadeOut(fifth, sixth);
     contentSixth.style.display = "block";
-    document.getElementById("guest-name").innerText = title.options[title.value].innerText + " " + firstName.value + " " + lastName.value
+    document.getElementById("guest-name").innerText =
+      title.options[title.value].innerText +
+      " " +
+      firstName.value +
+      " " +
+      lastName.value;
   } else {
     delay = 300;
   }
@@ -359,11 +347,9 @@ function displaySixth(direction, delay = 1000) {
     .timeline({ easing: "easeOutSine", direction: direction, duration: 400 })
     .add({
       targets: "#content-sixth",
-      scale: [0, 1]
+      scale: [0, 1],
     });
 }
-
-
 
 function fadeInFadeOut(fadeOut, fadeIn) {
   anime
@@ -411,7 +397,7 @@ function validateRadio(radios) {
 
 function validateSelect(selects) {
   for (let i = 0; i < selects.length; i++) {
-    console.log(selects[i].value)
+    console.log(selects[i].value);
     if (selects[i].value == 0) {
       selects[i].nextElementSibling.style.display = "block";
       return false;
@@ -428,12 +414,9 @@ function validateArrival(date) {
   return true;
 }
 
-
 function submitImage() {
   uploadImage(targetImage.files[0]);
 }
-
-
 
 function submitInvitation(image) {
   let appearance;
@@ -446,20 +429,18 @@ function submitInvitation(image) {
   let radio4 = document.getElementById("no-assistance");
 
   if (radio1.checked) {
-    appearance = "Physical presence"
+    appearance = "Physical presence";
   }
   if (radio2.checked) {
-    appearance = "Online presence"
+    appearance = "Online presence";
   }
 
   if (radio3.checked) {
-    assistance2 = "Yes"
+    assistance2 = "Yes";
   }
   if (radio4.checked) {
-    assistance2 = "No"
+    assistance2 = "No";
   }
-
-
 
   let payload = {
     title: title.options[title.value].innerText,
@@ -472,9 +453,9 @@ function submitInvitation(image) {
     arrivalDate: date.value,
     assistance: assistance2,
     memories: testimony.value,
-    photo: image
-  }
-  console.log(payload)
+    photo: image,
+  };
+  console.log(payload);
   let invitationXhr = new XMLHttpRequest();
   invitationXhr.open("POST", "/invitation", true);
   invitationXhr.setRequestHeader("Content-type", "application/json");
@@ -485,20 +466,18 @@ function submitInvitation(image) {
       let response = JSON.parse(this.response);
       displayFifth("reverse");
     }
-  }
+  };
 }
 
-
 // displaySixth("normal");
-// displaySecond("normal")
+// displayFirst("normal")
 
-let volume = false
+let volume = false;
 
 document.body.addEventListener("click", function (e) {
   let targetId = e.target.id;
   if (targetId == "btn-save") {
     displaySecond("normal");
-
   } else if (targetId == "to-third") {
     if (
       validateSelect([title]) &&
@@ -515,30 +494,28 @@ document.body.addEventListener("click", function (e) {
     ) {
       displayThird("reverse");
     }
-  }
-  else if (targetId == "to-fifth") {
+  } else if (targetId == "to-fifth") {
     displayFourth("reverse");
-  }
-  else if (targetId == "to-sixth") {
-    console.log(image.src)
-    if (image.src == `${location.origin}/images/pngfind.com-placeholder-png-6104451.png`) {
-      image.parentElement.parentElement.nextElementSibling.style.display = "block"
-    }
-    else {
+  } else if (targetId == "to-sixth") {
+    console.log(image.src);
+    if (
+      image.src ==
+      `${location.origin}/images/pngfind.com-placeholder-png-6104451.png`
+    ) {
+      image.parentElement.parentElement.nextElementSibling.style.display =
+        "block";
+    } else {
       submitImage();
     }
-  }
-
-  else if (targetId == "enable-audio") {
+  } else if (targetId == "enable-audio") {
     if (volume == false) {
-      document.getElementById("first").style.display = "block"
+      document.getElementById("first").style.display = "block";
       displayFirst("normal");
       volume = true;
       document.getElementById("audio").play();
-      document.getElementById("sound-modal").style.display = "none"
+      document.getElementById("sound-modal").style.display = "none";
     }
-  }
-  else if (targetId == "download-iv") {
+  } else if (targetId == "download-iv") {
     downloadIv();
   }
 });
@@ -548,17 +525,16 @@ function downloadIv() {
   document.getElementById("iv-progress").style.display = "block";
   setTimeout(function () {
     document.getElementById("iv-progress").style.display = "none";
-  }, 3000)
+  }, 3000);
   html2canvas(document.getElementById("iv")).then(function (canvas) {
     var anchorTag = document.createElement("a");
     document.body.appendChild(anchorTag);
     anchorTag.download = "j&k iv.jpg";
     anchorTag.href = canvas.toDataURL();
-    anchorTag.target = '_blank';
+    anchorTag.target = "_blank";
     anchorTag.click();
   });
 }
-
 
 document.body.addEventListener("change", function (e) {
   targetImage = e.target;
@@ -578,7 +554,12 @@ ScrollReveal().reveal(".bottom-img", {
   distance: "40px",
   origin: "bottom",
   opacity: 1,
-  reset: false,
+});
+
+ScrollReveal().reveal(".top-img", {
+  distance: "40px",
+  origin: "top",
+  opacity: 1,
 });
 ScrollReveal().reveal(".top", { distance: "40px", origin: "top" });
 ScrollReveal().reveal(".top-spc", { distance: "10px", origin: "top" });
@@ -594,49 +575,75 @@ const firebaseConfig = {
   storageBucket: "perfectlove23-29fae.appspot.com",
   messagingSenderId: "631163724583",
   appId: "1:631163724583:web:9302ef7a2f66198a677f02",
-  measurementId: "G-CF7CHRGVPN"
+  measurementId: "G-CF7CHRGVPN",
 };
 
 let app = firebase.initializeApp(firebaseConfig);
 
 async function uploadImage(image) {
-  document.getElementById("to-sixth").style.display = "none"
-  document.getElementById("progress").style.display = "block"
+  document.getElementById("to-sixth").style.display = "none";
+  document.getElementById("progress").style.display = "block";
   let storageRef = firebase.storage().ref();
 
   let imageRef = storageRef.child(image.name);
 
   let uploadTask = imageRef.put(image);
 
-  uploadTask.on('state_changed',
+  uploadTask.on(
+    "state_changed",
     (snapshot) => {
       // Observe state change events such as progress, pause, and resume
       // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
       var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-      document.getElementById("progress-percent").textContent = progress.toFixed(0);
-      console.log('Upload is ' + progress + '% done');
+      document.getElementById("progress-percent").textContent =
+        progress.toFixed(0);
+      console.log("Upload is " + progress + "% done");
       switch (snapshot.state) {
         case firebase.storage.TaskState.PAUSED: // or 'paused'
-          console.log('Upload is paused');
+          console.log("Upload is paused");
           break;
         case firebase.storage.TaskState.RUNNING: // or 'running'
-          console.log('Upload is running');
+          console.log("Upload is running");
           break;
       }
     },
     (error) => {
-      alert("Upload was unsuccessful. Please try again")
+      alert("Upload was unsuccessful. Please try again");
     },
     () => {
       // Handle successful uploads on complete
       // For instance, get the download URL: https://firebasestorage.googleapis.com/...
       uploadTask.snapshot.ref.getDownloadURL().then((downloadURL) => {
-        console.log('File available at', downloadURL);
+        console.log("File available at", downloadURL);
         submitInvitation(downloadURL);
       });
     }
   );
 }
 
+let countDownDate = new Date("Apr 29, 2023 06:00:00").getTime();
 
+let myFunc = setInterval(function () {
+  let now = new Date().getTime();
+  let timeLeft = countDownDate - now;
 
+  let days = Math.floor(timeLeft / (1000 * 60 * 60 * 24));
+  let hours = Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+  let minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
+  let seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
+
+  document.getElementById("days").textContent = days;
+  document.getElementById("hours").textContent = hours;
+  document.getElementById("minutes").textContent = minutes;
+  document.getElementById("seconds").textContent = seconds;
+
+  // if (days == 0) {
+  //   document.getElementById("hours").textContent = hours;
+  //   document.getElementById("minutes").textContent = minutes;
+  //   document.getElementById("seconds").textContent = seconds;
+  // }
+
+  if (timeLeft < 0) {
+    clearInterval(myFunc);
+  }
+}, 1000);
