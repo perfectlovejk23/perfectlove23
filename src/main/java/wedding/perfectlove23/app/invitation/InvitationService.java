@@ -30,4 +30,7 @@ public class InvitationService {
 	public List<Invitation> getAllInvitation() {
 		return (List<Invitation>) invitationRepository.findAll();
 	}
+        public List<Invitation> getAllInvitationDistinct() {
+		return (List<Invitation>) invitationRepository.findAllDistinctByMobileNumber();
+	}
 }
