@@ -31,6 +31,6 @@ public class InvitationService {
 		return (List<Invitation>) invitationRepository.findAll();
 	}
         public List<Invitation> getAllInvitationDistinct() {
-		return (List<Invitation>) invitationRepository.findAllDistinctByMobileNumber();
+		return (List<Invitation>) invitationRepository.findDistinctByMobileNumber();
 	}
 }
