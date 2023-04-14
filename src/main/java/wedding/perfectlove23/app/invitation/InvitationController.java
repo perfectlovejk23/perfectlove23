@@ -62,4 +62,8 @@ public class InvitationController {
 	public List<Invitation> getAllInvitation() {
 		return invitationService.getAllInvitation();
 	}
+        @RequestMapping("/distinct/invitations")
+	public List<Invitation> getAllInvitationDistinct() {
+		return invitationService.getAllInvitationDistinct();
+	}
 }
