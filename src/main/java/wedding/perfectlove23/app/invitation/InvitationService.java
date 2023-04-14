@@ -24,7 +24,7 @@ public class InvitationService {
 	}
 	
 	public List<Invitation> getInvitationGreatherThan(int id) {
-		return invitationRepository.findFirst100ByIdGreaterThanEqual(id);
+		return invitationRepository.findFirst10ByIdGreaterThanEqual(id);
 	}
 	
 	public List<Invitation> getAllInvitation() {
