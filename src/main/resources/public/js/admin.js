@@ -71,7 +71,7 @@ function getWeddingGuests(id, continuation) {
       response.forEach(function (item, index) {
         document.getElementById("table").innerHTML += bindWeddingGuest(
           item,
-          index + (lastGuestId - 100)
+          index + (lastGuestId - 10)
         );
       });
     }
