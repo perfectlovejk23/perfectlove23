@@ -10,7 +10,7 @@ public class Invitation {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
-	private String mobileNumber;
+	public String mobileNumber;
 	private String title;
 	private String firstName;
 	private String lastName;
