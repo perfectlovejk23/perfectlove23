@@ -14,6 +14,17 @@ public class InvitationService {
 	public Invitation addInvitation(Invitation invitation) {
 		return invitationRepository.save(invitation);
 	}
+
+        public List<Invitation> addInvitations(List<Invitation> invitations) {
+		return (List<Invitation>) invitationRepository.saveAll(invitations);
+	}
+
+        public void addInvitationsPhysical(List<Invitation> invitations) {
+                for(Invitation invitation : invitations) {
+                    invitation.setAppearance("Physical presence");
+                    invitationRepository.save(invitation);
+                }
+	}
 	
 	public Optional<Invitation> getInvitation(int id) {
 		return invitationRepository.findById(id);
