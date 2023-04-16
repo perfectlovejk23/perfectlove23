@@ -21,8 +21,8 @@ public class InvitationService {
 
         public void addInvitationsSpecial(List<Invitation> invitations) {
                 for(Invitation invitation : invitations) {
-                    Optional<Invitation> invitation2 = invitationRepository.findByMobileNumber(invitation.getMobileNumber);
-                    if (invitation2.empty()) {
+                    Optional<Invitation> invitation2 = invitationRepository.findByMobileNumber(invitation.mobileNumber);
+                    if (!invitation2.isPresent()) {
                          invitationRepository.save(invitation);
                     }
                 }
