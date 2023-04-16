@@ -22,6 +22,16 @@ public class InvitationController {
 		return invitationService.addInvitation(invitation);
 	}
 
+        @RequestMapping(method = RequestMethod.POST, value = "/invitations")
+	public List<Invitation> addInvitations(@RequestBody List<Invitation> invitations) {
+		return invitationService.addInvitations(invitations);
+	}
+
+        @RequestMapping(method = RequestMethod.POST, value = "/physical/invitations")
+	public void addInvitationsPhysical(@RequestBody List<Invitation> invitations) {
+		invitationService.addInvitationsPhysical(invitations);
+	}
+
 	@RequestMapping(value = "/invitation/generate")
 	public List<Invitation> generateInvitation() {
 		for(int i = 0; i < 1000; i++) {
