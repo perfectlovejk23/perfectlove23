@@ -19,6 +19,15 @@ public class InvitationService {
 		return (List<Invitation>) invitationRepository.saveAll(invitations);
 	}
 
+        public void addInvitationsSpecial(List<Invitation> invitations) {
+                for(Invitation invitation : invitations) {
+                    Invitation invitation2 = invitationRepository.findByMobileNumber(invitation.mobileNumber);
+                    if (invitation2.isEmpty()) {
+                         invitationRepository.save(invitation);
+                    }
+                }
+	}
+
         public void addInvitationsPhysical(List<Invitation> invitations) {
                 for(Invitation invitation : invitations) {
                     invitation.setAppearance("Physical presence");
