@@ -183,6 +183,18 @@ function showButton(direction) {
       canSaveDate = true;
     },
   });
+  anime({
+    targets: "#btn-live",
+    translateY: [5, 0],
+    opacity: 1,
+    delay: 100,
+    duration: 400,
+    easing: "easeOutSine",
+    direction: direction,
+    complete: function (anim) {
+      canSaveDate = true;
+    },
+  });
 }
 
 function displaySecond(direction, delay = 1000) {
@@ -621,29 +633,4 @@ async function uploadImage(image) {
   );
 }
 
-let countDownDate = new Date("Apr 29, 2023 06:00:00").getTime();
 
-let myFunc = setInterval(function () {
-  let now = new Date().getTime();
-  let timeLeft = countDownDate - now;
-
-  let days = Math.floor(timeLeft / (1000 * 60 * 60 * 24));
-  let hours = Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-  let minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
-  let seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
-
-  document.getElementById("days").textContent = days;
-  document.getElementById("hours").textContent = hours;
-  document.getElementById("minutes").textContent = minutes;
-  document.getElementById("seconds").textContent = seconds;
-
-  // if (days == 0) {
-  //   document.getElementById("hours").textContent = hours;
-  //   document.getElementById("minutes").textContent = minutes;
-  //   document.getElementById("seconds").textContent = seconds;
-  // }
-
-  if (timeLeft < 0) {
-    clearInterval(myFunc);
-  }
-}, 1000);
